@@ -51,7 +51,7 @@ function eventloop(plants::Array{Int, 1}, agents::Array{Agent{Int}, 1})
                     move!(a, WIDTH, HEIGHT)
                     turn!(a)
                     if(a.class == 1)
-                        fight!(a, preds)
+                        fight!(a, preds, WIDTH, HEIGHT)
                     end
                     idx = a.y * HEIGHT + a.x
                     idx == 0 ? idx += 1 : idx += 0

@@ -53,16 +53,17 @@ function turn!(a::Agent)
     a.direction = (nf, nl)
 end
 
-function fight!(a::Agent, preds::Array{Agent{Int}})
+function fight!(a::Agent, preds::Array{Agent{Int}}, w::Int, h::Int)
+
     near = filter(p -> p.x == a.x && p.y == a.y
-                    || p.x == a.x && p.y == a.y + 1
-                    || p.x == a.x && p.y == a.y - 1
-                    || p.x == a.x + 1 && p.y == a.y
-                    || p.x == a.x - 1 && p.y == a.y
-                    || p.x == a.x + 1 && p.y == a.y + 1
-                    || p.x == a.x - 1 && p.y == a.y - 1
-                    || p.x == a.x + 1 && p.y == a.y - 1
-                    || p.x == a.x - 1 && p.y == a.y + 1 , preds)
+                    || p.x == a.x && p.y == mod(a.y + 1, h)
+                    || p.x == a.x && p.y == mod(a.y - 1, h)
+                    || p.x == mod(a.x + 1, w) && p.y == a.y
+                    || p.x == mod(a.x - 1, w) && p.y == a.y
+                    || p.x == mod(a.x + 1, w) && p.y == mod(a.y + 1, h)
+                    || p.x == mod(a.x - 1, w) && p.y == mod(a.y - 1, h)
+                    || p.x == mod(a.x + 1, w) && p.y == mod(a.y - 1, h)
+                    || p.x == mod(a.x - 1, w) && p.y == mod(a.y + 1, h) , preds)
     if(length(near) > 0)
         for _ in 1:length(near)
             chance = rand(1:10)
