@@ -12,9 +12,20 @@ end
 function clear()
     @printf("%c[2J", 27)
 end
-
-function writeat(x::Int, y::Int, c::Char)
-    @printf("\033[%d;%df%s\n", y, x, c)
+#=
+for color in [:red, :green, :blue, :yellow, :magenta]
+   print_with_color(color, "$(color)\n")
+end
+=#
+function writeat(x::Int, y::Int, class::Int)
+    @printf("\033[%d;%df", y, x)
+    if(class == 1)
+        print_with_color(:green, "A\n")
+    elseif(class == 2)
+        print_with_color(:red, "P\n")
+    else
+        println("NaN")
+    end
 end
 
 function randdir()
